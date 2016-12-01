@@ -8,7 +8,7 @@ typedef struct _FLIGHT
 {
 	int flight_num;                     /*no to forget to limit with MAX_ID from ex2.h*/
 	FlightType flight_type;            /*FlightType from from ex2.h*/
-	char destination[3];              /*is it the correct way to define string?*/
+	char destination[DEST_SIZE];              /*is it the correct way to define string?*/
 	BOOL emergency;                  /*is it emergency*/
 } FLIGTH, *PFLIGHT;
 
