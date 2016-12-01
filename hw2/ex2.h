@@ -13,5 +13,6 @@ typedef enum result_t {
 } Result;
 
 #define MAX_ID (100000)
+#define DEST_SIZE (3)
 
 #endif /* EX2_H_ */
