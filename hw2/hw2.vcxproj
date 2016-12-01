@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="ex2.h" />
     <ClInclude Include="flight.h" />
+    <ClInclude Include="runway.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="flight.c" />
