@@ -150,6 +150,9 @@
     <ClInclude Include="ex2.h" />
     <ClInclude Include="flight.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="flight.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
