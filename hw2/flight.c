@@ -6,17 +6,17 @@
 #include "ex2.h"
 
 
-int size_of_flight;
-size_of_flight = sizeof(PFLIGHT);
 
 PFLIGHT createFlight(int flight_num, FlightType flight_type, char destination[DEST_SIZE], BOOL emergency)
 {
 	PFLIGHT pFlight;
 	printf("here 1\n");                 ///////////////////////////
-	pFlight = (PFLIGHT)malloc(size_of_flight);
+	pFlight = (PFLIGHT)malloc(sizeof(FLIGHT));
 	printf("here 2\n");                ///////////////////////////
 	if (pFlight == NULL)
+	
 		return NULL;
+	
 	printf("here 3\n");                ///////////////////////////
 	pFlight->flight_num = flight_num;
 	printf("here 4\n");                ///////////////////////////
@@ -27,6 +27,7 @@ PFLIGHT createFlight(int flight_num, FlightType flight_type, char destination[DE
 	pFlight->emergency = emergency;
 	printf("here 7\n");                ///////////////////////////
 	return pFlight;
+
 }
 
 
@@ -34,7 +35,7 @@ void destroyFlight(PFLIGHT pFlight)
 {
 	free(pFlight);
 	pFlight = NULL;
-	printf("here 8\n");                ///////////////////////////
+	printf("here it is destroyed \n");                ///////////////////////////
 
 }
 
@@ -44,7 +45,7 @@ Result printFlight(PFLIGHT pFlight)
 	
 	if (pFlight == NULL)
 		return FAILURE;
-
+	else
 	char *IsEmergency;
 	if (pFlight->emergency)
 		IsEmergency = "E";    /* Emergency flight */
