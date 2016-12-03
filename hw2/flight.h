@@ -1,4 +1,3 @@
-#pragma once
 #ifndef _FLIGHT_H_
 #define _FLIGHT_H_
 #include "ex2.h"

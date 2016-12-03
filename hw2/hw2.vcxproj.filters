@@ -26,5 +26,8 @@
     <ClCompile Include="flight.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main_flight.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
