@@ -116,12 +116,12 @@ Result printRunway(PRUNWAY PRunway) /*Prints the runway details, and flight list
 	return SUCCESS;
 }
 
-
+/*
 int main()
 {
 	PRUNWAY pointer;
 
-	/*
+	
 	pointer = create_runway(1, INTERNATIONAL);
 	if (pointer != NULL)
 	{
@@ -130,7 +130,10 @@ int main()
 	}else
 		printf("shit");
 	int* something;
-	*/
+	
 	return 0;
 
 }
+/*
+
+*/

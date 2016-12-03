@@ -13,7 +13,7 @@ typedef struct _FLIGHT
 
 /* Interface functions */
 
-PFLIGHT createFlight(int, FlightType, char, BOOL);       /* Creates flight - returns pointer  - allocates memory*/
+PFLIGHT createFlight(int, FlightType, char[DEST_SIZE], BOOL);       /* Creates flight - returns pointer  - allocates memory*/
 void destroyFlight(PFLIGHT);							/*needs to delete and free the memory*/
 Result printFlight(PFLIGHT);                           /*prints flight details and Success or Failure of Null*/
 

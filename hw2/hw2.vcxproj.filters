@@ -32,5 +32,8 @@
     <ClCompile Include="runway.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="debug_flight.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
