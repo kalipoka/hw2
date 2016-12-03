@@ -2,6 +2,7 @@
 #define EX2_H_
 
 
+
 typedef enum ftype_t {
 	DOMESTIC, INTERNATIONAL
 } FlightType;

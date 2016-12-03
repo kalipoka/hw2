@@ -21,12 +21,15 @@
     <ClInclude Include="ex2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="runway.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="flight.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main_flight.c">
+    <ClCompile Include="runway.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
