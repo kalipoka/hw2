@@ -1,7 +1,7 @@
 #pragma once
 #ifndef _RUNWAY_H_
 #define _RUNWAY_H_
-#endif 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "ex2.h"
@@ -30,3 +30,5 @@ Result addFlight(PRUNWAY, PFLIGHT); /*Inserts a flight to the runway - using run
 Result removeFlight(PRUNWAY, PFLIGHT); /*remove a flight from a runway -  using runway and flight pointer*/
 Result depart(PRUNWAY); /*Removes the first flight in line - using runway_pointer*/
 Result printRunway(PRUNWAY); /*Prints the runway details, and flight list assigned to it - using runway_pointer*/
+
+#endif /*_RUNWAY_H_*/
