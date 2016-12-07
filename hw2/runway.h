@@ -10,7 +10,7 @@
 
 typedef struct _FLIGHT_LIST_ELEM {
 	PFLIGHT data;
-	struct _LIST_ELEMENT* pNext;
+	struct PFLIGHT_LIST_ELEM* pNext;
 } FLIGHT_LIST_ELEM, *PFLIGHT_LIST_ELEM;
 
 

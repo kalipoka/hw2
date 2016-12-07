@@ -4,7 +4,7 @@
 #include <string.h>
 #include "flight.h"
 #include "ex2.h"
-
+/*
 int main() {
 	printf("Hola  \n");
 	
@@ -17,7 +17,6 @@ int main() {
 /*
 	destroyFlight(pFlight2);
 	res2 = printFlight(pFlight2);
-*/
 
 	PFLIGHT pFlight3 = createFlight(3, DOMESTIC, "HFA", TRUE);
 	PFLIGHT pFlight4 = createFlight(4, DOMESTIC, "JRS", TRUE);
@@ -31,3 +30,4 @@ int main() {
 	return 0;
 
 }
+*/
