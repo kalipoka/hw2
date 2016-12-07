@@ -7,25 +7,19 @@
 
 
 
+
 PFLIGHT createFlight(int flight_num, FlightType flight_type, char destination[DEST_SIZE], BOOL emergency)
 {
 	PFLIGHT pFlight;
-	printf("here 1\n");                 ///////////////////////////
 	pFlight = (PFLIGHT)malloc(sizeof(FLIGHT));
-	printf("here 2\n");                ///////////////////////////
 	if (pFlight == NULL)
 	
 		return NULL;
-	
-	printf("here 3\n");                ///////////////////////////
+
 	pFlight->flight_num = flight_num;
-	printf("here 4\n");                ///////////////////////////
 	pFlight->flight_type = flight_type;
-	printf("here 5\n");                ///////////////////////////
 	strcpy(pFlight->destination, destination);
-	printf("here 6\n");                ///////////////////////////
 	pFlight->emergency = emergency;
-	printf("here 7\n");                ///////////////////////////
 	return pFlight;
 
 }
@@ -33,20 +27,19 @@ PFLIGHT createFlight(int flight_num, FlightType flight_type, char destination[DE
 
 void destroyFlight(PFLIGHT pFlight)
 {
-	
-	/*pFlight = NULL;*/
 	free(pFlight);
-	printf("here it is destroyed \n");                ///////////////////////////
+	pFlight = NULL;
 
 }
 
 
 Result printFlight(PFLIGHT pFlight)
 {
-	char *IsEmergency;
+	
 	if (pFlight == NULL)
 		return FAILURE;
 	else
+	char *IsEmergency;
 	if (pFlight->emergency)
 		IsEmergency = "E";    /* Emergency flight */
 	else
@@ -58,7 +51,7 @@ Result printFlight(PFLIGHT pFlight)
 	else
 		IsDomestic = "I";
 
-	printf("Fligth %d %s %s %s\n", pFlight->flight_num, IsDomestic, pFlight->destination, IsEmergency);
+	printf("Flight %d %s %s %s\n", pFlight->flight_num, IsDomestic, pFlight->destination, IsEmergency);
 
 	return SUCCESS;
 

@@ -2,7 +2,7 @@
 #include "ex2.h"
 
 
-void* create_runway(int RunwayNum, FlightType type) // return an id to the created runway
+void* create_runway(int RunwayNum, FlightType type) // return an pointer to the created runway
 {
 	if ((type != DOMESTIC) && (type != INTERNATIONAL) || ((RunwayNum < 0) && RunwayNum > MAX_ID))
 		return NULL;
@@ -14,7 +14,6 @@ void* create_runway(int RunwayNum, FlightType type) // return an id to the creat
 
 	PRunway->type=type;
 	PRunway->runway_num = RunwayNum;
-	PRunway->PFflight = NULL;
 
 	return PRunway;
 }
@@ -71,11 +70,22 @@ Result addFlight(PRUNWAY PRunway, PFLIGHT Pflight) /*Inserts a flight to the run
 		return FAILURE;
 
 	//check if flight type matches runway 
+	if (Pflight->flight_type != PRunway->type)
+		return FAILURE;
 
 	//create a copy of the flight
+	PFLIGHT new_Pflight  = createFlight(Pflight->flight_num, Pflight->flight_type, Pflight->destination, Pflight->emergency);
 
-
-	PFLIGHT_LIST_ELEM pElem = PRunway->PFflight;
+	PFLIGHT_LIST_ELEM Plast_flight = PRunway->PFflight;
+	printf("nice one");
+	while (Plast_flight->pNext != NULL)
+	{
+		printf("ohh yeah" );
+		Plast_flight = Plast_flight->pNext;
+	}
+	printf("nice two");
+	Plast_flight->pNext = new_Pflight;
+	
 	
 	return SUCCESS;
 }
@@ -113,16 +123,31 @@ Result depart(PRUNWAY PRunway) /*Removes the first flight in line - using runway
 
 Result printRunway(PRUNWAY PRunway) /*Prints the runway details, and flight list assigned to it - using runway_pointer*/
 {
+	if (PRunway == NULL)
+		return FAILURE;
+	printf("Runway %d ", PRunway->runway_num);
+	if (PRunway->type == INTERNATIONAL)
+		printf("international\n");
+	else
+		printf("domestic\n");
+
+	PFLIGHT_LIST_ELEM tmp = PRunway->PFflight->pNext;
+	while (tmp)
+	{
+		//printFlight(tmp);
+		tmp = tmp->pNext;
+	}
 	return SUCCESS;
 }
 
-/*
+
 int main()
 {
 	PRUNWAY pointer;
 
 	
-	pointer = create_runway(1, INTERNATIONAL);
+	pointer = create_runway(1, DOMESTIC);
+	/*
 	if (pointer != NULL)
 	{
 		printf("%c\n", pointer->type);
@@ -130,6 +155,16 @@ int main()
 	}else
 		printf("shit");
 	int* something;
+	*/
+
+	PFLIGHT pFlight3 = createFlight(3, DOMESTIC, "HFA", TRUE);
+	PFLIGHT pFlight4 = createFlight(4, DOMESTIC, "JRS", TRUE);
+
+	if (addFlight(pointer, pFlight3) == FAILURE) printf("FAIL\n");
+	if (addFlight(pointer, pFlight4) == FAILURE) printf("FAIL\n");
+
+	printRunway(pointer);
+	destroyRunway(pointer);
 	
 	return 0;
 
