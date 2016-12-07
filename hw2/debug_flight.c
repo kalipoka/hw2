@@ -14,10 +14,10 @@ int main() {
 	PFLIGHT pFlight2 = createFlight(2, INTERNATIONAL, "PAR", FALSE);    //  creates flight2
 	Result res2 = printFlight(pFlight2);                                //  prints flight2
 
-/*
+
 	destroyFlight(pFlight2);
-	res2 = printFlight(pFlight2);
-*/
+	res2 = printFlight(pFlight2);   //     here it prints shiiieieiiet
+
 
 	PFLIGHT pFlight3 = createFlight(3, DOMESTIC, "HFA", TRUE);
 	PFLIGHT pFlight4 = createFlight(4, DOMESTIC, "JRS", TRUE);

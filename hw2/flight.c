@@ -33,8 +33,9 @@ PFLIGHT createFlight(int flight_num, FlightType flight_type, char destination[DE
 
 void destroyFlight(PFLIGHT pFlight)
 {
+	
+	/*pFlight = NULL;*/
 	free(pFlight);
-	pFlight = NULL;
 	printf("here it is destroyed \n");                ///////////////////////////
 
 }
@@ -42,11 +43,10 @@ void destroyFlight(PFLIGHT pFlight)
 
 Result printFlight(PFLIGHT pFlight)
 {
-	
+	char *IsEmergency;
 	if (pFlight == NULL)
 		return FAILURE;
 	else
-	char *IsEmergency;
 	if (pFlight->emergency)
 		IsEmergency = "E";    /* Emergency flight */
 	else
