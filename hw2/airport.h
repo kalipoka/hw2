@@ -22,17 +22,17 @@ typedef struct _AIRPORT {
 
 // done unchecked
 Result addRunway(int, FlightType); //get number of a runway and type enter it to the end of the runway list...
-//done unchecked
+//DONE
 Result removeRunway(int); // get the NUM of a runway and remove it from the airport
-//done unchecked
+//DONE
 Result addFlightToAirport(int, FlightType, char[DEST_SIZE], BOOL); //add it lowest flight number and D/I and check if flight number already exists in the airport!
 //DONE
 Result departFromRunway(int); //gets number of a Runway and departs the flight from it.
-//DONE
-Result stormAlert(); // check all runways for destination with storm - remove and add it back at the end of the list. // check if dest is legal. //
-//UNDONE
+//DONE unchecked
+Result stormAlert(char[DEST_SIZE]); // check all runways for destination with storm - remove and add it back at the end of the list. // check if dest is legal. //
+//Done
 void printAirport();
-//UNDONE
+//Done unchecked
 void destroyAirport();
 
 

@@ -4,6 +4,7 @@
 static PAIRPORT PAirport;
 static PRUNWAY_ELEM Prun;
 
+
 ///helper functions
 PFLIGHT findFlightNum(int flightNum)
 {
@@ -24,8 +25,8 @@ PFLIGHT findFlightNum(int flightNum)
 
 PRUNWAY findRunway(int rwN) /* rwN = runway Number*/
 {
-	PRUNWAY_ELEM tmp = PAirport->head->pNext;
-	while (!tmp)
+	PRUNWAY_ELEM tmp = PAirport->head;
+	while (tmp)
 		if (tmp->data->runway_num == rwN)
 			return tmp->data;
 		else
@@ -41,23 +42,29 @@ Result addRunway(int Runway_num, FlightType Runway_type)
 	/* check is the number is legal*/
 	if ((Runway_num < 0) || (Runway_num > MAX_ID))
 		return FAILURE;
-	if (findRunway(Runway_num))
-	/* element already exist in the set*/
-		return FAILURE;
-
+	
 	PRUNWAY_ELEM tmp;
-	if (PAirport->head == NULL)
+	tmp = (PRUNWAY_ELEM)malloc(sizeof(RUNWAY_ELEM));
+	if (!tmp) return FALSE;
+	tmp->data = create_runway(Runway_num, Runway_type);
+	tmp->pNext = NULL;
+
+	if (!PAirport->head)
+	{
+		PAirport->head = tmp;
+		
+		return SUCCESS;
+	}
+
+	if (findRunway(Runway_num)) /* element already exist in the set*/
 		return FAILURE;
 
-	tmp = (PRUNWAY_ELEM)malloc(sizeof(RUNWAY_ELEM));
-	/* check memory allocation*/
-	if (!tmp) return FALSE;
-
-	tmp->data = create_runway(Runway_num, Runway_type);
-
-	tmp->pNext = PAirport->head;
 	/* update the head */
-	PAirport->head = tmp;
+	PRUNWAY_ELEM last_runway = PAirport->head;
+	while (last_runway->pNext != NULL)
+		last_runway = last_runway->pNext;
+	last_runway->pNext = tmp;
+
 	return SUCCESS;
 }
 	
@@ -65,7 +72,7 @@ Result removeRunway(int Runwaynum)
 {
 	PRUNWAY_ELEM currentR = PAirport->head->pNext;
 	PRUNWAY_ELEM prevR = PAirport->head;
-	while (!currentR)
+	while (currentR)
 	{
 		if (currentR->data->runway_num == Runwaynum)
 		{
@@ -84,20 +91,23 @@ Result addFlightToAirport(int flight_num, FlightType flight_type, char destinati
 {
 
 	PRUNWAY_ELEM iRunways = PAirport->head;
-	PRUNWAY Choosen_Runway = PAirport->head->data; //start searching from head
+	PRUNWAY Choosen_Runway = NULL;
 	PFLIGHT new_flight = createFlight(flight_num, flight_type, destination, emergency);
-	if (new_flight==NULL)
+	if (!new_flight)
 		return FAILURE;
-	while (!iRunways)
+	
+	while (iRunways)
 	{
-		if (iRunways->data->type == flight_type) //if same time
-			if (isFlightExists(iRunways->data, flight_num) == FALSE) // no flight like this in this runway
-				if (Choosen_Runway->Lflight->size > iRunways->data->Lflight->size)
+		if (iRunways->data->type == flight_type) /*is it the right flight type*/
+			if (isFlightExists(iRunways->data, flight_num) == FALSE) /*is the flight num exists */
+				if (!Choosen_Runway)
+					Choosen_Runway = iRunways->data;
+				else if (Choosen_Runway->Lflight->size > iRunways->data->Lflight->size) /* check if runway is the smallest*/
 					Choosen_Runway = iRunways->data;
 		iRunways = iRunways->pNext;
 	}
 		
-	if (Choosen_Runway) //if Choosen_Runway not NULL
+	if (Choosen_Runway)
 		return addFlight(Choosen_Runway, new_flight);
 	else
 		return FAILURE;
@@ -135,11 +145,12 @@ Result stormAlert(char destination[DEST_SIZE])
 void printAirport()
 {
 	PRUNWAY_ELEM iRunways = PAirport->head;
-	printf("Airport status");
-	while (!iRunways) {
+	printf("Airport status\n");
+	while (iRunways) {
 		printRunway(iRunways->data);
 		iRunways = iRunways->pNext;
 	}
+	return;
 }
 
 void destroyAirport()
@@ -149,7 +160,7 @@ void destroyAirport()
 	printf("Airport status\n");
 	while (!iRunways) {
 		tmp = PAirport->head->pNext;
-		destroyRunway(iRunways);
+		destroyRunway(iRunways->data);
 		iRunways = tmp;
 	}
 	free(PAirport);
@@ -158,45 +169,37 @@ void destroyAirport()
 
 int main()
 {
-
 	PAirport = (PAIRPORT)malloc(sizeof(AIRPORT));
 	if (!PAirport) return NULL;
-	Prun = (PRUNWAY_ELEM)malloc(sizeof(RUNWAY_ELEM));
-	if (!Prun) return NULL;
 
-	PAirport->head = Prun;
+	PAirport->head = NULL;
 
-	/*
-	Result res1 = addRunway(1, DOMESTIC);
-	Result res2 = addFlightToAirport(12, DOMESTIC, "BKK", TRUE);
-	if (res2 == FAILURE) printf("failure add flight");
-	if (res2 == SUCCESS) printf("success add flight");
-
-	printAirport();
-
-	*/
-
-	Result res1 = addRunway(1, DOMESTIC);
-	Result res2 = addRunway(3, DOMESTIC);
-	Result res3 = addRunway(70, DOMESTIC);
-
-	PRUNWAY dd = findRunway(3);
-
-	Result res4 = removeRunway(3);
-	Result res5 = removeRunway(70);
-
-	printAirport();
-	destroyAirport();
-
-
-	/*
 	if (addRunway(1, DOMESTIC) == FAILURE) printf("FUCK THIS SHIT");
-	if (addRunway(1, DOMESTIC) == SUCCESS) printf("its ok");
-	*/
+	if (addRunway(2, INTERNATIONAL) == FAILURE) printf("FUCK THIS SHIT");
 
-	
+	addFlightToAirport(3, DOMESTIC, "HFA", FALSE);
+	addFlightToAirport(4, INTERNATIONAL, "JRS", FALSE);
+	addFlightToAirport(5, DOMESTIC, "JRS", TRUE);
+	addFlightToAirport(6, INTERNATIONAL, "BCN", FALSE);
+	addFlightToAirport(7, DOMESTIC, "MAD", TRUE);
+
+	//printAirport();
+
+	stormAlert("JRS");
+
+	printf("\n");
+	//printAirport();
+
+	printf("\n");
+	departFromRunway(1);
+	departFromRunway(2);
+	//if (removeRunway(1) == FAILURE) printf("FUCK THIS SHIT\n");
+	if (removeRunway(2)== FAILURE) printf("FUCK THIS SHIT\n");
+	printAirport();
 
 	return 0;
+
+
 
 
 }
