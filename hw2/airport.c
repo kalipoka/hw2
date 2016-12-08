@@ -21,6 +21,7 @@ PFLIGHT findFlightNum(int flightNum)
 	}
 	return NULL;
 }
+*/
 
 BOOL findRunway(int rwN) /* rwN = runway Number*/
 {
