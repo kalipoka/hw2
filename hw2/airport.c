@@ -5,6 +5,8 @@ static PAIRPORT PAirport;
 
 
 ///helper functions
+
+/*
 PFLIGHT findFlightNum(int flightNum)
 {
 	PRUNWAY_ELEM iRunways = PAirport->head->pNext;
@@ -20,7 +22,8 @@ PFLIGHT findFlightNum(int flightNum)
 	}
 	return NULL;
 }
-
+*/
+/*
 BOOL findFlightDst(PRUNWAY i)
 {
 	PRUNWAY_ELEM iRunways = PAirport->head;
@@ -32,10 +35,10 @@ BOOL findFlightDst(PRUNWAY i)
 				return TRUE;
 			else
 				tmp = tmp->pNext;
-	/* if we got here, it means that the element was not found */
 	return FALSE;
 }
-
+*/
+/*
 PFLIGHT_SET createSet()
 {
 	PFLIGHT_SET s;
@@ -46,12 +49,11 @@ PFLIGHT_SET createSet()
 	s->size = -1;
 	return s;
 }
-
+*/
 
 BOOL findRunway(int rwN) /* rwN = runway Number*/
 {
-	PRUNWAY_ELEM tmp;
-	int num;
+	PRUNWAY_ELEM tmp = PAirport->head;
 	while (tmp != NULL)
 		if (tmp->data->runway_num == rwN)
 			return TRUE;
@@ -89,7 +91,7 @@ Result addRunway(int Runway_num, FlightType Runway_type)
 
 	
 
-
+/*
 Result removeRunway(int Runwaynum)
 {
 	PRUNWAY_ELEM currentR = PAirport->head->pNext;
@@ -107,4 +109,8 @@ Result removeRunway(int Runwaynum)
 	}
 }
 
+*/
+
+/*
 departFromRunway
+*/
