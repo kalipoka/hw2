@@ -173,7 +173,7 @@ Result addFlight(PRUNWAY PRunway, PFLIGHT Pflight) /*Inserts a flight to the run
 			return FAILURE;
 }
 	
-Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a runway -  using runway and flight pointer*/
+Result removeFlight(const PRUNWAY PRunway, int flight_num) /*remove a flight from a runway -  using runway and flight num*/
 {
 	if (!PRunway)
 		return FAILURE;
@@ -188,7 +188,6 @@ Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a ru
 		{
 			pPrev->pNext= tmp->pNext;
 			destroyFlight(tmp->data);
-			free(tmp);
 			PRunway->Lflight->size--;
 			return SUCCESS;
 		}

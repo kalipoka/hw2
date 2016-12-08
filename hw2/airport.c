@@ -135,17 +135,15 @@ Result stormAlert(char destination[DEST_SIZE])
 		iFlights = iRunways->data->Lflight->head->pNext;
 		while (iFlights)
 		{
-			if (strcmp(iFlights->data->destination, destination) == 0) { /*if we find identical dest in list*/
+			if (strcmp(iFlights->data->destination,destination) == 0) { /*if we find identical dest in list*/
 				/*get the parameters*/
 				int n = iFlights->data->flight_num;
-				FlightType flight_type= iFlights->data->flight_type;
 				BOOL emergency = iFlights->data->emergency;
 				/*remove the flight*/
 				if (removeFlight(iRunways->data, n) == FAILURE) return FAILURE;
-				if (addFlightToAirport(n,flight_type,destination,emergency) == FAILURE) return FAILURE;
+				if (addFlightToAirport(n,iRunways->data->type,destination,emergency) == FAILURE) return FAILURE;
 			}
-			PFLIGHT_ELEM i = iFlights->pNext;
-			iFlights = i;
+			iFlights = iFlights->pNext;
 		}
 		iRunways = iRunways->pNext;
 	}
@@ -197,18 +195,18 @@ int main()
 
 	//printAirport();
 
-//	stormAlert("JRS");
+	stormAlert("JRS");
 
     //	printf("\n");
 	//printAirport();
 	//departFromRunway(1);
 	//departFromRunway(2);
-	if (removeRunway(1) == FAILURE) printf("FUCK THIS SHIT\n");
-	/*
-	if (removeRunway(3) == FAILURE) printf("FUCK THIS SHIT\n");
-	if (removeRunway(2) == FAILURE) printf("FUCK THIS SHIT\n");
-	if (removeRunway(4) == FAILURE) printf("FUCK THIS SHIT\n");
-	*/
+	//if (removeRunway(1) == FAILURE) printf("FUCK THIS SHIT\n");
+	
+	//if (removeRunway(3) == FAILURE) printf("FUCK THIS SHIT\n");
+	//if (removeRunway(2) == FAILURE) printf("FUCK THIS SHIT\n");
+	//if (removeRunway(4) == FAILURE) printf("FUCK THIS SHIT\n");
+	
 	//if (removeRunway(2)== FAILURE) printf("FUCK THIS SHIT\n");
 	printAirport();
 
