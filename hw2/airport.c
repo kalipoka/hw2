@@ -71,34 +71,24 @@ Result addRunway(int Runway_num, FlightType Runway_type)
 	/* element already exist in the set*/
 		return FAILURE;
 
-
 	PRUNWAY_ELEM tmp;
+	if (PAirport == NULL)
+		return FAILURE;
 	tmp = (PRUNWAY_ELEM)malloc(sizeof(RUNWAY_ELEM));
 	/* check memory allocation*/
 	if (!tmp) return FALSE;
 
-
-	/* create set*/
-	PFLIGHT_SET s;
-	s = (PFLIGHT_SET)malloc(sizeof(FLIGHT_SET));
-	if (!s)
-		return NULL;
-	s->head = NULL;
-	s->size = -1;
-	return s;
-	/* till here*/
 	tmp->data = create_runway(Runway_num, Runway_type);
-		runway_num = Runway_num;
-	tmp->pNext = PAirport->head;
 
+	tmp->pNext = PAirport->head;
 	/* update the head */
 	PAirport->head = tmp;
 	return SUCCESS;
 }
-	s->head = tmp;
+	
 
-	return TRUE;
-}
+	
+
 
 Result removeRunway(int Runwaynum)
 {
