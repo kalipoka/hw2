@@ -101,7 +101,6 @@ PRUNWAY create_runway(int RunwayNum, FlightType type) // return a pointer to the
 	pointer->flight_num = 999999;
 	
 	addToSet(PRunway->Lflight, pointer);
-	printf("fine");
 	//PRunway->Lflight->head = pointer; // to set the head to be the fake;
 	PRunway->type=type;
 	PRunway->runway_num = RunwayNum;

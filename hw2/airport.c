@@ -2,6 +2,7 @@
 
 /*Globals*/
 static PAIRPORT PAirport;
+static PRUNWAY_ELEM Prun;
 
 
 ///helper functions
@@ -135,21 +136,39 @@ Result stormAlert(char destination[DEST_SIZE])
 
 void printAirport()
 {
+	PRUNWAY_ELEM iRunways = PAirport->head;
+	printf("Airport status");
+	while (!iRunways) {
+		printRunway(iRunways->data);
+		iRunways = iRunways->pNext;
+	}
+}
 
-
+void destroyAirport()
+{
+	PRUNWAY_ELEM iRunways = PAirport->head;
+	PRUNWAY_ELEM tmp;
+	printf("Airport status\n");
+	while (!iRunways) {
+		tmp = PAirport->head->pNext;
+		destroyRunway(iRunways);
+		iRunways = tmp;
+	}
+	free(PAirport);
+	free(Prun);
 }
 
 int main()
 {
 	PAirport = (PAIRPORT)malloc(sizeof(AIRPORT));
 	if (!PAirport) return NULL;
-	PRUNWAY_ELEM Prun = (PRUNWAY_ELEM)malloc(sizeof(RUNWAY_ELEM));
+	Prun = (PRUNWAY_ELEM)malloc(sizeof(RUNWAY_ELEM));
 	if (!Prun) return NULL;
 
 	PAirport->head = Prun;
 
 	if (addRunway(1, DOMESTIC) == FAILURE) printf("FUCK THIS SHIT");
-	
+	printAirport();
 
 	return 0;
 
