@@ -184,9 +184,13 @@ Result printRunway(PRUNWAY PRunway) /*Prints the runway details, and flight list
 	return SUCCESS;
 }
 
-/*
+
 int main()
 {
+
+
+
+	/*
 	PRUNWAY pointer;
 	pointer = create_runway(1, DOMESTIC);
 
@@ -210,9 +214,9 @@ int main()
 
 	printRunway(pointer);
 	destroyRunway(pointer);
-
+	*/
 	return 0;
 
 }
 
-*/
+
