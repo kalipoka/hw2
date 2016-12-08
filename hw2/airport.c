@@ -73,12 +73,20 @@ Result removeRunway(int Runwaynum)
 	PRUNWAY_ELEM currentR = PAirport->head->pNext;
 	PRUNWAY_ELEM prevR = PAirport->head;
 	/*Chech if the head needs to be deleted*/
-	if (PAirport->head->data->runway_num == Runwaynum) // need to delete the head of the airport
+	if (PAirport->head->data->runway_num == Runwaynum) { // need to delete the head of the airport
+
 		if (PAirport->head->pNext != NULL) { // there are more run ways;
 			destroyRunway(PAirport->head->data);
 			PAirport->head = PAirport->head->pNext; // the next runway becomes head
 			return SUCCESS;
 		}
+
+		else { // there are no more run ways
+			destroyRunway(PAirport->head->data);
+			return SUCCESS;
+		}
+	}
+
 	while (currentR)
 	{
 		if (currentR->data->runway_num == Runwaynum)
@@ -151,6 +159,8 @@ Result stormAlert(char destination[DEST_SIZE])
 
 void printAirport()
 {
+	if (PAirport == NULL)
+		return;
 	PRUNWAY_ELEM iRunways = PAirport->head;
 	printf("Airport status\n");
 	while (iRunways) {
@@ -164,12 +174,12 @@ void destroyAirport()
 {
 	PRUNWAY_ELEM iRunways = PAirport->head;
 	PRUNWAY_ELEM tmp;
-	printf("Airport status\n");
-	while (!iRunways) {
+	while (iRunways) {
 		tmp = PAirport->head->pNext;
 		destroyRunway(iRunways->data);
 		iRunways = tmp;
 	}
+	// from here
 	free(PAirport);
 	free(Prun);
 }
@@ -191,7 +201,6 @@ int main()
 	addFlightToAirport(5, DOMESTIC, "JRS", TRUE);
 	addFlightToAirport(6, INTERNATIONAL, "BCN", FALSE);
 	addFlightToAirport(7, DOMESTIC, "MAD", TRUE);
-
 	//printAirport();
 
 //	stormAlert("JRS");
@@ -201,17 +210,14 @@ int main()
 	//departFromRunway(1);
 	//departFromRunway(2);
 	if (removeRunway(1) == FAILURE) printf("FUCK THIS SHIT\n");
-	/*
-	if (removeRunway(3) == FAILURE) printf("FUCK THIS SHIT\n");
 	if (removeRunway(2) == FAILURE) printf("FUCK THIS SHIT\n");
-	if (removeRunway(4) == FAILURE) printf("FUCK THIS SHIT\n");
-	*/
+
+	
 	//if (removeRunway(2)== FAILURE) printf("FUCK THIS SHIT\n");
+
+	//destroyAirport();
+
 	printAirport();
 
 	return 0;
-
-
-
-
 }
