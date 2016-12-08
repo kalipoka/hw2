@@ -26,7 +26,7 @@ PFLIGHT findFlightNum(int flightNum)
 PRUNWAY findRunway(int rwN) /* rwN = runway Number*/
 {
 	PRUNWAY_ELEM tmp = PAirport->head;
-	while (!tmp)
+	while (tmp)
 		if (tmp->data->runway_num == rwN)
 			return tmp->data;
 		else
@@ -72,7 +72,7 @@ Result removeRunway(int Runwaynum)
 {
 	PRUNWAY_ELEM currentR = PAirport->head->pNext;
 	PRUNWAY_ELEM prevR = PAirport->head;
-	while (!currentR)
+	while (currentR)
 	{
 		if (currentR->data->runway_num == Runwaynum)
 		{
@@ -179,11 +179,22 @@ int main()
 
 	addFlightToAirport(3, DOMESTIC, "HFA", FALSE);
 	addFlightToAirport(4, INTERNATIONAL, "JRS", FALSE);
-	addFlightToAirport(5, DOMESTIC, "TLV", TRUE);
+	addFlightToAirport(5, DOMESTIC, "JRS", TRUE);
 	addFlightToAirport(6, INTERNATIONAL, "BCN", FALSE);
 	addFlightToAirport(7, DOMESTIC, "MAD", TRUE);
 
-	removeRunway(2);
+	//printAirport();
+
+	stormAlert("JRS");
+
+	printf("\n");
+	//printAirport();
+
+	printf("\n");
+	departFromRunway(1);
+	departFromRunway(2);
+	//if (removeRunway(1) == FAILURE) printf("FUCK THIS SHIT\n");
+	if (removeRunway(2)== FAILURE) printf("FUCK THIS SHIT\n");
 	printAirport();
 
 	return 0;
