@@ -137,8 +137,7 @@ Result stormAlert(char destination[DEST_SIZE])
 				if (removeFlight(iRunways->data, n) == FAILURE) return FAILURE;
 				if (addFlightToAirport(n,flight_type,destination,emergency) == FAILURE) return FAILURE;
 			}
-			PFLIGHT_ELEM i = iFlights->pNext;
-			iFlights = i;
+			iFlights = iFlights->pNext;
 		}
 		iRunways = iRunways->pNext;
 	}
