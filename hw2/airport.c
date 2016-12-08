@@ -8,45 +8,19 @@ static PAIRPORT PAirport;
 PFLIGHT findFlightNum(int flightNum)
 {
 	PRUNWAY_ELEM iRunways = PAirport->head->pNext;
-	if (!iRunways)
-		return NULL;
-
 	PFLIGHT_ELEM iFlights = iRunways->data->Lflight->head->pNext;
 
 	while (!iRunways) {
-		if (isFlightExists(iRunways->data, flightNum) == TRUE)
-			return iRun;
+		while (!iFlights)
+		{
+			if (isFlightExists(iRunways->data, flightNum) == TRUE)
+				return iFlights->data;
+			iFlights = iFlights->pNext;
+		}
 		iRunways = iRunways->pNext;
 	}
 	return NULL;
 }
-
-BOOL findFlightDst(PRUNWAY i)
-{
-	PRUNWAY_ELEM iRunways = PAirport->head;
-	PRUNWAY_ELEM iFlights = PAirport->head;
-
-	while (tmp != NULL)
-		while tmp
-			if (tmp->data == i)
-				return TRUE;
-			else
-				tmp = tmp->pNext;
-	/* if we got here, it means that the element was not found */
-	return FALSE;
-}
-
-PFLIGHT_SET createSet()
-{
-	PFLIGHT_SET s;
-	s = (PFLIGHT_SET)malloc(sizeof(FLIGHT_SET));
-	if (!s)
-		return NULL;
-	s->head = NULL;
-	s->size = -1;
-	return s;
-}
-
 
 BOOL findRunway(int rwN) /* rwN = runway Number*/
 {
@@ -62,43 +36,6 @@ BOOL findRunway(int rwN) /* rwN = runway Number*/
 }
 
 
-Result addRunway(int Runway_num, FlightType Runway_type)
-{
-	/* chech is the number is legal*/
-	if ((Runway_num < 0) && (Runway_num > MAX_ID))
-		return FAILURE;
-	if (findRunway(Runway_num) == TRUE)
-	/* element already exist in the set*/
-		return FAILURE;
-
-
-	PRUNWAY_ELEM tmp;
-	tmp = (PRUNWAY_ELEM)malloc(sizeof(RUNWAY_ELEM));
-	/* check memory allocation*/
-	if (!tmp) return FALSE;
-
-
-	/* create set*/
-	PFLIGHT_SET s;
-	s = (PFLIGHT_SET)malloc(sizeof(FLIGHT_SET));
-	if (!s)
-		return NULL;
-	s->head = NULL;
-	s->size = -1;
-	return s;
-	/* till here*/
-	tmp->data = create_runway(Runway_num, Runway_type);
-		runway_num = Runway_num;
-	tmp->pNext = PAirport->head;
-
-	/* update the head */
-	PAirport->head = tmp;
-	return SUCCESS;
-}
-	s->head = tmp;
-
-	return TRUE;
-}
 
 Result removeRunway(int Runwaynum)
 {
@@ -117,4 +54,33 @@ Result removeRunway(int Runwaynum)
 	}
 }
 
-departFromRunway
+
+Result addFlightToAirport(int flight_num, FlightType flight_type, char destination[DEST_SIZE], BOOL emergency)
+{
+
+	PRUNWAY_ELEM iRunways = PAirport->head->pNext;
+	PRUNWAY Choosen_Runway;
+	PFLIGHT new_flight = createFlight(flight_num, flight_type, destination, emergency);
+	if (!new_flight)
+		return FAILURE;
+
+	Choosen_Runway->Lflight->size = 0;
+	Choosen_Runway->runway_num = 999999;
+	
+	while (!iRunways)
+	{
+		if (iRunways->data->type == flight_type)
+			if (isFlightExists(iRunways, flight_num) == FALSE)
+				if (Choosen_Runway->Lflight->size > iRunways->data->Lflight->size)
+					Choosen_Runway = iRunways;
+		iRunways = iRunways->pNext;
+	}
+		
+	if (Choosen_Runway->runway_num != 999999)
+		return addFlight(Choosen_Runway, new_flight);
+	else
+		return FAILURE;
+}
+
+
+

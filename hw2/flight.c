@@ -16,7 +16,7 @@ PFLIGHT createFlight(int flight_num, FlightType flight_type, char destination[DE
 	if (pFlight == NULL) 
 		return NULL;
 	if ((flight_num < 0) && (flight_num > MAX_ID)) return NULL;
-
+	
 	pFlight->flight_num = flight_num;
 	pFlight->flight_type = flight_type;
 	strcpy(pFlight->destination, destination);
