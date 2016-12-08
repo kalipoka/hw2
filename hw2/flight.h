@@ -11,6 +11,7 @@ typedef struct _FLIGHT
 	BOOL emergency;                  /*is it emergency*/
 } FLIGHT, *PFLIGHT;
 
+
 /* Interface functions */
 
 PFLIGHT createFlight(int, FlightType, char[DEST_SIZE], BOOL);       /* Creates flight - returns pointer  - allocates memory*/

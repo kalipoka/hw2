@@ -22,6 +22,7 @@ PFLIGHT findFlightNum(int flightNum)
 	return NULL;
 }
 
+
 PRUNWAY findRunway(int rwN) /* rwN = runway Number*/
 {
 	PRUNWAY_ELEM tmp = PAirport->head->pNext;
@@ -33,6 +34,7 @@ PRUNWAY findRunway(int rwN) /* rwN = runway Number*/
 	/* if we got here, it means that the runway was not found */
 	return NULL;
 }
+
 
 //Functions
 
@@ -61,6 +63,7 @@ Result addRunway(int Runway_num, FlightType Runway_type)
 	return SUCCESS;
 }
 	
+	
 Result removeRunway(int Runwaynum)
 {
 	PRUNWAY_ELEM currentR = PAirport->head->pNext;
@@ -79,6 +82,7 @@ Result removeRunway(int Runwaynum)
 	}
 	return FAILURE;
 }
+
 
 Result addFlightToAirport(int flight_num, FlightType flight_type, char destination[DEST_SIZE], BOOL emergency)
 {

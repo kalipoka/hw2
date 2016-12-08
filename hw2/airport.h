@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ex2.h"
 #include "flight.h"
 #include "runway.h"
@@ -19,14 +20,19 @@ typedef struct _AIRPORT {
 	PRUNWAY_ELEM head; /* head of the linked list */
 } AIRPORT, *PAIRPORT;
 
-
+// done unchecked
 Result addRunway(int, FlightType); //get number of a runway and type enter it to the end of the runway list...
+//done unchecked
 Result removeRunway(int); // get the NUM of a runway and remove it from the airport
+//done unchecked
 Result addFlightToAirport(int, FlightType, char[DEST_SIZE], BOOL); //add it lowest flight number and D/I and check if flight number already exists in the airport!
+//DONE
 Result departFromRunway(int); //gets number of a Runway and departs the flight from it.
+//DONE
 Result stormAlert(); // check all runways for destination with storm - remove and add it back at the end of the list. // check if dest is legal. //
+//UNDONE
 void printAirport();
-
+//UNDONE
 void destroyAirport();
 
 

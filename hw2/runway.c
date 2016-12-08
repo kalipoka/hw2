@@ -34,7 +34,7 @@ BOOL addToSet(PFLIGHT_SET s, PFLIGHT PFlight) {
 		return FALSE;
 	if (findInSet(s, PFlight) == TRUE)
 		/* element already exist in the set*/
-		return TRUE;
+		return FALSE;
 	
 	tmp = (PFLIGHT_ELEM)malloc(sizeof(FLIGHT_ELEM));
 	if (!tmp) return FALSE;
@@ -52,6 +52,34 @@ BOOL addToSet(PFLIGHT_SET s, PFLIGHT PFlight) {
 	s->size++;
 	return TRUE;
 }
+
+
+BOOL addToSet_Emergency(PFLIGHT_SET s, PFLIGHT PFlight) {
+	PFLIGHT_ELEM tmp;
+	if (!s) return FALSE;
+	if (findInSet(s, PFlight) == TRUE) return FALSE;
+		/* element already exist in the set*/
+
+	tmp = (PFLIGHT_ELEM)malloc(sizeof(FLIGHT_ELEM));
+	if (!tmp) return FALSE; /*malloc check*/
+	
+	tmp->data = PFlight;
+	tmp->pNext = NULL;
+
+	if (s->head) {
+		PFLIGHT_ELEM last_flight = s->head;
+		while ((last_flight->pNext) && (last_flight->pNext->data->emergency != FALSE))
+			last_flight = last_flight->pNext;
+		tmp->pNext = last_flight->pNext;
+		last_flight->pNext = tmp;
+	}
+	else
+		s->head = tmp;
+
+	s->size++;
+	return TRUE;
+}
+
 //////////////////
 
 PRUNWAY create_runway(int RunwayNum, FlightType type) // return a pointer to the created runway
@@ -63,14 +91,17 @@ PRUNWAY create_runway(int RunwayNum, FlightType type) // return a pointer to the
 	PRunway = (PRUNWAY) malloc(sizeof(RUNWAY));
 	if (!PRunway)
 		return NULL;
-	
+
 	PRunway->Lflight = createSet();
+	
 	if (!PRunway->Lflight) return NULL;
 	
-	PFLIGHT pointer = createFlight(100000, DOMESTIC, "AAA", FALSE);
-	pointer->flight_num = 999999;
+	PFLIGHT pointer = createFlight(1, DOMESTIC, "AAA", TRUE);
 
+	pointer->flight_num = 999999;
+	
 	addToSet(PRunway->Lflight, pointer);
+	printf("fine");
 	//PRunway->Lflight->head = pointer; // to set the head to be the fake;
 	PRunway->type=type;
 	PRunway->runway_num = RunwayNum;
@@ -80,12 +111,13 @@ PRUNWAY create_runway(int RunwayNum, FlightType type) // return a pointer to the
 
 void destroyRunway(PRUNWAY PRunway)  /* destroy the runway and waiting list in the runway - using runway pointer*/
 {
-	PFLIGHT tmp;
-	while (!PRunway->Lflight->head)
+	PFLIGHT_ELEM tmp = PRunway->Lflight->head;
+	while (!tmp)
 	{
-		tmp = PRunway->Lflight->head->pNext;
-		destroyFlight(PRunway->Lflight->head);
-		PRunway->Lflight->head = tmp;
+		PRunway->Lflight->head = tmp->pNext; //new head is the next elem
+		destroyFlight(tmp->data); //destroy the current flight data
+		free(tmp); //destroy the element
+		tmp = PRunway->Lflight->head; //get the new head
 	}
 	free(PRunway->Lflight);
 	free(PRunway);
@@ -126,14 +158,20 @@ Result addFlight(PRUNWAY PRunway, PFLIGHT Pflight) /*Inserts a flight to the run
 		return FAILURE;
 
 	if (isFlightExists(PRunway, Pflight->flight_num) == TRUE) return FAILURE;
-
+	
 	/*create a copy of the flight*/
 	PFLIGHT new_Pflight  = createFlight(Pflight->flight_num, Pflight->flight_type, Pflight->destination, Pflight->emergency);
 
-	if (addToSet(PRunway->Lflight, new_Pflight) == TRUE)
-		return SUCCESS;
-	else
-		return FAILURE;
+	if (new_Pflight->emergency == TRUE) //
+		if (addToSet_Emergency(PRunway->Lflight, new_Pflight) == TRUE)
+			return SUCCESS;
+		else
+			return FAILURE;
+	else //this isn't emergency flight
+		if (addToSet(PRunway->Lflight, new_Pflight) == TRUE)
+			return SUCCESS;
+		else
+			return FAILURE;
 }
 	
 Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a runway -  using runway and flight pointer*/
@@ -150,7 +188,9 @@ Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a ru
 		if (tmp->data->flight_num == flight_num)
 		{
 			pPrev->pNext= tmp->pNext;
-			destroyFlight(tmp);
+			destroyFlight(tmp->data);
+			free(tmp);
+			PRunway->Lflight->size--;
 			return SUCCESS;
 		}
 		pPrev = tmp;
@@ -184,25 +224,27 @@ Result printRunway(PRUNWAY PRunway) /*Prints the runway details, and flight list
 	return SUCCESS;
 }
 
-
+/*
 int main()
 {
 
-	
-
-	/*
 	PRUNWAY pointer;
+
 	pointer = create_runway(1, DOMESTIC);
 
-	PFLIGHT pFlight3 = createFlight(3, DOMESTIC, "HFA", TRUE);
-	PFLIGHT pFlight4 = createFlight(4, DOMESTIC, "JRS", TRUE);
-	PFLIGHT pFlight5 = createFlight(4, DOMESTIC, "JRS", TRUE);
-
+	PFLIGHT pFlight3 = createFlight(3, DOMESTIC, "HFA", FALSE);
+	PFLIGHT pFlight4 = createFlight(4, DOMESTIC, "JRS", FALSE);
+	PFLIGHT pFlight5 = createFlight(5, DOMESTIC, "TLV", TRUE);
+	PFLIGHT pFlight6 = createFlight(6, DOMESTIC, "BCN", FALSE);
+	PFLIGHT pFlight7 = createFlight(7, DOMESTIC, "MAD", TRUE);
 	
 	if (addFlight(pointer, pFlight3) == FAILURE) printf("FAIL\n");
 	if (addFlight(pointer, pFlight4) == FAILURE) printf("FAIL\n");
 	if (addFlight(pointer, pFlight4) == FAILURE) printf("FAIL\n");
 	if (addFlight(pointer, pFlight5) == FAILURE) printf("FAIL\n");
+	if (addFlight(pointer, pFlight6) == FAILURE) printf("FAIL\n");
+	if (addFlight(pointer, pFlight7) == FAILURE) printf("FAIL\n");
+
 	printf("Number of flights in List: %d\n\n", getFlightNum(pointer));
 	if (isFlightExists(pointer,3)==TRUE) printf("the flight exists!\n");
 	if (isFlightExists(pointer, 10) == FALSE) printf("the flight doesn't exists!\n");
@@ -211,12 +253,12 @@ int main()
 
 	printf("\n");
 	if (depart(pointer) == FAILURE) printf("FAIL!!");
-
+	printf("Number of flights in List: %d\n\n", getFlightNum(pointer));
 	printRunway(pointer);
 	destroyRunway(pointer);
-	*/
+	
 	return 0;
 
 }
-
+*/
 
