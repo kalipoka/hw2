@@ -191,6 +191,9 @@ int main()
 	if (addRunway(1, DOMESTIC) == FAILURE) printf("FUCK THIS SHIT");
 	if (addRunway(1, DOMESTIC) == SUCCESS) printf("its ok");
 	*/
+
+	
+
 	return 0;
 
 
