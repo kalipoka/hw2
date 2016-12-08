@@ -158,6 +158,7 @@ void destroyAirport()
 
 int main()
 {
+
 	PAirport = (PAIRPORT)malloc(sizeof(AIRPORT));
 	if (!PAirport) return NULL;
 	Prun = (PRUNWAY_ELEM)malloc(sizeof(RUNWAY_ELEM));
@@ -165,6 +166,7 @@ int main()
 
 	PAirport->head = Prun;
 
+	/*
 	Result res1 = addRunway(1, DOMESTIC);
 	Result res2 = addFlightToAirport(12, DOMESTIC, "BKK", TRUE);
 	if (res2 == FAILURE) printf("failure add flight");
@@ -172,7 +174,7 @@ int main()
 
 	printAirport();
 
-	/*
+	*/
 
 	Result res1 = addRunway(1, DOMESTIC);
 	Result res2 = addRunway(3, DOMESTIC);
@@ -185,7 +187,7 @@ int main()
 
 	printAirport();
 	destroyAirport();
-	*/
+
 
 	/*
 	if (addRunway(1, DOMESTIC) == FAILURE) printf("FUCK THIS SHIT");
