@@ -24,8 +24,7 @@ PFLIGHT findFlightNum(int flightNum)
 
 BOOL findRunway(int rwN) /* rwN = runway Number*/
 {
-	PRUNWAY_ELEM tmp;
-	int num;
+	PRUNWAY_ELEM tmp = PAirport->head;
 	while (tmp != NULL)
 		if (tmp->data->runway_num == rwN)
 			return TRUE;
@@ -36,7 +35,34 @@ BOOL findRunway(int rwN) /* rwN = runway Number*/
 }
 
 
+Result addRunway(int Runway_num, FlightType Runway_type)
+{
+	/* chech is the number is legal*/
+	if ((Runway_num < 0) && (Runway_num > MAX_ID))
+		return FAILURE;
+	if (findRunway(Runway_num) == TRUE)
+	/* element already exist in the set*/
+		return FAILURE;
 
+	PRUNWAY_ELEM tmp;
+	if (PAirport == NULL)
+		return FAILURE;
+	tmp = (PRUNWAY_ELEM)malloc(sizeof(RUNWAY_ELEM));
+	/* check memory allocation*/
+	if (!tmp) return FALSE;
+
+	tmp->data = create_runway(Runway_num, Runway_type);
+
+	tmp->pNext = PAirport->head;
+	/* update the head */
+	PAirport->head = tmp;
+	return SUCCESS;
+}
+	
+
+	
+
+/*
 Result removeRunway(int Runwaynum)
 {
 	PRUNWAY_ELEM currentR = PAirport->head->pNext;
@@ -82,5 +108,4 @@ Result addFlightToAirport(int flight_num, FlightType flight_type, char destinati
 		return FAILURE;
 }
 
-
-
+departFromRunway
