@@ -21,7 +21,7 @@ typedef struct _AIRPORT {
 
 
 Result addRunway(int, FlightType); //get number of a runway and type enter it to the end of the runway list...
-Result removeRunway; // get the NUM of a runway and remove it from the airport
+Result removeRunway(int); // get the NUM of a runway and remove it from the airport
 Result addFlightToAirport(); //add it lowest flight number and D/I and check if flight number already exists in the airport!
 Result departFromRunway(int); //gets number of a Runway and departs the flight from it.
 Result stormAlert(); // check all runways for destination with storm - remove and add it back at the end of the list. // check if dest is legal. //

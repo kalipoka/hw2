@@ -5,15 +5,33 @@ static PAIRPORT PAirport;
 
 
 ///helper functions
-BOOL findFlight(PRUNWAY i)
+PFLIGHT findFlightNum(int flightNum)
 {
-	PRUNWAY_ELEM tmp;
-	tmp = s->head;
+	PRUNWAY_ELEM iRunways = PAirport->head->pNext;
+	if (!iRunways)
+		return NULL;
+
+	PFLIGHT_ELEM iFlights = iRunways->data->Lflight->head->pNext;
+
+	while (!iRunways) {
+		if (isFlightExists(iRunways->data, flightNum) == TRUE)
+			return iRun;
+		iRunways = iRunways->pNext;
+	}
+	return NULL;
+}
+
+BOOL findFlightDst(PRUNWAY i)
+{
+	PRUNWAY_ELEM iRunways = PAirport->head;
+	PRUNWAY_ELEM iFlights = PAirport->head;
+
 	while (tmp != NULL)
-		if (tmp->data == i)
-			return TRUE;
-		else
-			tmp = tmp->pNext;
+		while tmp
+			if (tmp->data == i)
+				return TRUE;
+			else
+				tmp = tmp->pNext;
 	/* if we got here, it means that the element was not found */
 	return FALSE;
 }
@@ -51,3 +69,22 @@ Result addRunway(int Runway_num, FlightType Runway_type)
 
 	return TRUE;
 }
+
+Result removeRunway(int Runwaynum)
+{
+	PRUNWAY_ELEM currentR = PAirport->head->pNext;
+	PRUNWAY_ELEM prevR = PAirport->head;
+	while (!currentR)
+	{
+		if (currentR->data->runway_num == Runwaynum)
+		{
+			prevR->pNext = currentR->pNext;
+			destroyRunway(currentR->data);
+			free(currentR); //////CHECK IF IS CORRENLANCE AS IN ADDRUNWAY
+		}
+		prevR = currentR;
+		currentR = currentR->pNext;
+	}
+}
+
+departFromRunway
