@@ -10,11 +10,12 @@
 
 PFLIGHT createFlight(int flight_num, FlightType flight_type, char destination[DEST_SIZE], BOOL emergency)
 {
+	
 	PFLIGHT pFlight;
 	pFlight = (PFLIGHT)malloc(sizeof(FLIGHT));
-	if (pFlight == NULL)
-	
+	if (pFlight == NULL) 
 		return NULL;
+	if ((flight_num < 0) && (flight_num > MAX_ID)) return NULL;
 
 	pFlight->flight_num = flight_num;
 	pFlight->flight_type = flight_type;
