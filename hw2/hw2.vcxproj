@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="airport.c" />
     <ClCompile Include="flight.c" />
+    <ClCompile Include="main.c" />
     <ClCompile Include="runway.c" />
     <ClCompile Include="debug_flight.c" />
   </ItemGroup>

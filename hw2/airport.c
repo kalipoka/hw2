@@ -183,6 +183,7 @@ void destroyAirport()
 	free(Prun);
 }
 
+/*
 int main()
 {
 	PAirport = (PAIRPORT)malloc(sizeof(AIRPORT));
@@ -230,3 +231,4 @@ int main()
 
 	return 0;
 }
+*/
