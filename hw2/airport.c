@@ -185,6 +185,11 @@ void destroyAirport()
 
 int main()
 {
+
+	PFLIGHT pFlight1 = createFlight(1, DOMESTIC, "DvG", FALSE);  //  creates flight1
+	Result res1 = printFlight(pFlight1);                        //  prints flight1
+
+	/*
 	PAirport = (PAIRPORT)malloc(sizeof(AIRPORT));
 	if (!PAirport) return NULL;
 
@@ -224,9 +229,11 @@ int main()
 
 	if (removeRunway(1) == FAILURE) printf("FUCK THIS SHIT\n");
 	if (removeRunway(2) == FAILURE) printf("FUCK THIS SHIT\n");
-	//if (removeRunway(2)== FAILURE) printf("FUCK THIS SHIT\n");
-	//destroyAirport();
+	if (removeRunway(2)== FAILURE) printf("FUCK THIS SHIT\n");
+	destroyAirport();
 	printAirport();
+	*/
+
 
 	return 0;
 }
