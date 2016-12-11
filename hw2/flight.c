@@ -7,15 +7,29 @@
 
 
 
+int isDst(char* s)
+/*returns 0 if it is DST format*/
+{
+	int isDigit = 0;
+	int j = 0;
+	if (strlen(s) != DEST_SIZE)
+		return 1;
+	while (j < strlen(s)) {
+		if (s[j] < 65 || s[j] >90) return 1;
+		j++;
+	}
+	return 0;
+}
+
+
 
 PFLIGHT createFlight(int flight_num, FlightType flight_type, char destination[DEST_SIZE], BOOL emergency)
 {
-	if (((flight_type != DOMESTIC) && (flight_type != INTERNATIONAL)) || ((flight_num < 0) && (flight_num > MAX_ID)) || ((emergency != FALSE) && (emergency != TRUE)))
+	if (((flight_type != DOMESTIC) && (flight_type != INTERNATIONAL)) || ((flight_num <= 0) && (flight_num > MAX_ID)) || ((emergency != FALSE) && (emergency != TRUE)))
 		return NULL;
-	if (((int)destination[0]>90 || (int)destination[0]<65) || (int)(destination[1]>90 || (int)destination[1]<65) || (int)(destination[2]>90 || (int)destination[2]<65))
+	if (isDst(destination) != 0)
 		return NULL;
-
-
+	
 	PFLIGHT pFlight;
 	pFlight = (PFLIGHT)malloc(sizeof(FLIGHT));
 	if (pFlight == NULL)

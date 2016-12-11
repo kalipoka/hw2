@@ -142,8 +142,9 @@ Result departFromRunway(int runway_num)
 	return depart(tmp);
 }
 
-Result stormAlert(char destination[DEST_SIZE])
+Result stormAlert(char destination)
 {
+	if (isDst(destination) != 0) return FAILURE;
 	PRUNWAY_ELEM iRunways = PAirport->head->pNext;
 
 	while (iRunways) {
