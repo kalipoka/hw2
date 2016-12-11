@@ -111,7 +111,7 @@ PRUNWAY create_runway(int RunwayNum, FlightType type) // return a pointer to the
 void destroyRunway(PRUNWAY PRunway)  /* destroy the runway and waiting list in the runway - using runway pointer*/
 {
 	PFLIGHT_ELEM tmp = PRunway->Lflight->head;
-	while (!tmp)
+	while (tmp)
 	{
 		PRunway->Lflight->head = tmp->pNext; //new head is the next elem
 		destroyFlight(tmp->data); //destroy the current flight data
