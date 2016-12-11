@@ -120,6 +120,11 @@ int main() {
 						continue;
 					}
 
+					if (num<1 || num>MAX_ID) {
+						fprintf(stderr, "%s execution failed.\n", pszCmd);
+						continue;
+					}
+
 					if (!strcmp(P2, "I"))
 						flighttype = INTERNATIONAL;
 					else
@@ -145,11 +150,7 @@ int main() {
 								continue;
 							}
 							// check if we succed in adding the flight
-							if (addFlightToAirport(num, flighttype, P3, emergency) == FAILURE) {
-								fprintf(stderr, "%s execution failed.\n", pszCmd);
-								continue;
-							}
-							addFlightToAirport(num, flighttype, P3, emergency);
+								addFlightToAirport(num, flighttype, P3, emergency);
 							continue;
 				}
 				else
@@ -165,7 +166,7 @@ int main() {
 							continue;
 						}
 						num = atoi(P1);
-						// check if there are flights is the runway at all - ottherwise - fail
+						// check if there are flights is the runway - ottherwise - fail
 						PRUNWAY temp = findRunway(num);
 						if (getFlightNum(temp) <= 0) {
 							fprintf(stderr, "%s execution failed.\n", pszCmd);
