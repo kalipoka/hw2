@@ -186,7 +186,7 @@ void destroyAirport()
 int main()
 {
 
-	PFLIGHT pFlight1 = createFlight(1, DOMESTIC, "DvG", FALSE);  //  creates flight1
+	PFLIGHT pFlight1 = createFlight(1, DOMESTIC, "DDG", FALSE);  //  creates flight1
 	Result res1 = printFlight(pFlight1);                        //  prints flight1
 
 	/*
