@@ -119,7 +119,7 @@ int main() {
 						fprintf(stderr, "%s execution failed.\n", pszCmd);
 						continue;
 					}
-
+					//// check if we haveA legal Num
 					if (num<1 || num>MAX_ID) {
 						fprintf(stderr, "%s execution failed.\n", pszCmd);
 						continue;
@@ -149,9 +149,12 @@ int main() {
 								fprintf(stderr, "%s execution failed.\n", pszCmd);
 								continue;
 							}
-							// check if we succed in adding the flight
-								addFlightToAirport(num, flighttype, P3, emergency);
-							continue;
+							// check if we succed in adding the flight 
+							if (addFlightToAirport(num, flighttype, P3, emergency) != SUCCESS) {
+								fprintf(stderr, "%s execution failed.\n", pszCmd);
+								continue;
+								}
+							
 				}
 				else
 					if (!strcmp(pszCmd, "Depart")) // <runwayNumber>
