@@ -9,7 +9,7 @@ BOOL findInSet(PFLIGHT_SET s, PFLIGHT i)
 		return FALSE;
 	tmp = s->head;
 	while (tmp != NULL)
-		if (tmp->data == i)
+		if (tmp->data->flight_num == i->flight_num) // we need to compare number of the flight
 			return TRUE;
 		else
 			tmp = tmp->pNext;
@@ -111,7 +111,7 @@ PRUNWAY create_runway(int RunwayNum, FlightType type) // return a pointer to the
 void destroyRunway(PRUNWAY PRunway)  /* destroy the runway and waiting list in the runway - using runway pointer*/
 {
 	PFLIGHT_ELEM tmp = PRunway->Lflight->head;
-	while (!tmp)
+	while (tmp)
 	{
 		PRunway->Lflight->head = tmp->pNext; //new head is the next elem
 		destroyFlight(tmp->data); //destroy the current flight data
@@ -127,7 +127,7 @@ BOOL isFlightExists(PRUNWAY PRunway, int flight_num)
 {
 	if (!PRunway)
 		return FALSE;
-	if ((flight_num < 0) && (flight_num > MAX_ID))
+	if ((flight_num < 1) || (flight_num > MAX_ID))
 		return FALSE;
 	PFLIGHT_ELEM tmp = PRunway->Lflight->head->pNext;
 	while (tmp)
@@ -173,7 +173,7 @@ Result addFlight(PRUNWAY PRunway, PFLIGHT Pflight) /*Inserts a flight to the run
 			return FAILURE;
 }
 	
-Result removeFlight(const PRUNWAY PRunway, int flight_num) /*remove a flight from a runway -  using runway and flight num*/
+Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a runway -  using runway and flight num*/
 {
 	if (!PRunway)
 		return FAILURE;
@@ -212,7 +212,7 @@ Result printRunway(PRUNWAY PRunway) /*Prints the runway details, and flight list
 		printf("international\n");
 	else
 		printf("domestic\n");
-
+	printf("%d flights are waiting:\n", PRunway->Lflight->size);
 	PFLIGHT_ELEM tmp = PRunway->Lflight->head->pNext;
 	while (tmp)
 	{

@@ -12,7 +12,10 @@ typedef struct _FLIGHT
 } FLIGHT, *PFLIGHT;
 
 
+
+
 /* Interface functions */
+int isDst(char* s); /*returns 0 if it is DST format*/
 
 PFLIGHT createFlight(int, FlightType, char[DEST_SIZE], BOOL);       /* Creates flight - returns pointer  - allocates memory*/
 void destroyFlight(PFLIGHT);							/*needs to delete and free the memory*/
