@@ -131,11 +131,14 @@ Result addFlightToAirport(int flight_num, FlightType flight_type, char destinati
 					Choosen_Runway = iRunways->data;
 		iRunways = iRunways->pNext;
 	}
-		
+	Result tmp;
 	if (Choosen_Runway)                        // we did choose runway
-		return addFlight(Choosen_Runway, new_flight);
-	else
-		return FAILURE;
+		tmp = addFlight(Choosen_Runway, new_flight);
+	else {
+		destroyFlight(new_flight);
+		tmp = FAILURE;
+	}
+	return tmp;
 }
 
 Result departFromRunway(int runway_num)
@@ -242,8 +245,8 @@ int main()
 
 	//departFromRunway(1);
 	//departFromRunway(2);
-	if (removeRunway(10) == FAILURE) printf("FUCK THIS SHIT\n");
-	if (removeRunway(20) == FAILURE) printf("FUCK THIS SHIT\n");
+	//if (removeRunway(10) == FAILURE) printf("FUCK THIS SHIT\n");
+	//if (removeRunway(20) == FAILURE) printf("FUCK THIS SHIT\n");
 
 	//if (removeRunway(2)== FAILURE) printf("FUCK THIS SHIT\n");
 	destroyAirport();

@@ -167,13 +167,17 @@ Result addFlight(PRUNWAY PRunway, PFLIGHT Pflight) /*Inserts a flight to the run
 	if (new_Pflight->emergency == TRUE) //
 		if (addToSet_Emergency(PRunway->Lflight, new_Pflight) == TRUE)
 			return SUCCESS;
-		else
+		else {
+			destroyFlight(new_Pflight);
 			return FAILURE;
+		}
 	else //this isn't emergency flight
 		if (addToSet(PRunway->Lflight, new_Pflight) == TRUE)
 			return SUCCESS;
-		else
+		else {
+			destroyFlight(new_Pflight);
 			return FAILURE;
+		}
 }
 	
 Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a runway -  using runway and flight num*/
@@ -190,7 +194,6 @@ Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a ru
 		if (tmp->data->flight_num == flight_num)
 		{
 			pPrev->pNext= tmp->pNext;
-			PRunway;
 			destroyFlight(tmp->data);
 			PRunway->Lflight->size--;
 			return SUCCESS;
@@ -200,6 +203,7 @@ Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a ru
 	}
 	return FAILURE; //Not found in flight list
 }
+
 
 Result depart(PRUNWAY PRunway) /*Removes the first flight in line - using runway_pointer*/
 {
