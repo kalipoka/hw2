@@ -200,6 +200,7 @@ Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a ru
 Result depart(PRUNWAY PRunway) /*Removes the first flight in line - using runway_pointer*/
 {
 	if (!PRunway) return FAILURE;
+	if (!PRunway->Lflight->head->pNext) return FAILURE;
 	return removeFlight(PRunway, PRunway->Lflight->head->pNext->data->flight_num);
 }
 
@@ -226,34 +227,46 @@ Result printRunway(PRUNWAY PRunway) /*Prints the runway details, and flight list
 int main()
 {
 
-	PRUNWAY pointer;
+	PRUNWAY pointerI, pointerD;
 
-	pointer = create_runway(1, DOMESTIC);
+	pointerI = create_runway(1, INTERNATIONAL);
+	pointerD = create_runway(2, DOMESTIC);
 
 	PFLIGHT pFlight3 = createFlight(3, DOMESTIC, "HFA", FALSE);
 	PFLIGHT pFlight4 = createFlight(4, DOMESTIC, "JRS", FALSE);
 	PFLIGHT pFlight5 = createFlight(5, DOMESTIC, "TLV", TRUE);
 	PFLIGHT pFlight6 = createFlight(6, DOMESTIC, "BCN", FALSE);
 	PFLIGHT pFlight7 = createFlight(7, DOMESTIC, "MAD", TRUE);
+
+	PFLIGHT pFlight8 = createFlight(3, INTERNATIONAL, "HFA", FALSE);
+	PFLIGHT pFlight9 = createFlight(4, INTERNATIONAL, "JRS", FALSE);
+
 	
-	if (addFlight(pointer, pFlight3) == FAILURE) printf("FAIL\n");
-	if (addFlight(pointer, pFlight4) == FAILURE) printf("FAIL\n");
-	if (addFlight(pointer, pFlight4) == FAILURE) printf("FAIL\n");
-	if (addFlight(pointer, pFlight5) == FAILURE) printf("FAIL\n");
-	if (addFlight(pointer, pFlight6) == FAILURE) printf("FAIL\n");
-	if (addFlight(pointer, pFlight7) == FAILURE) printf("FAIL\n");
+	if (addFlight(pointerD, pFlight3) == FAILURE) printf("FAIL1\n");
+	if (addFlight(pointerD, pFlight4) == FAILURE) printf("FAIL2\n");
+	if (addFlight(pointerD, pFlight4) == FAILURE) printf("FAIL3\n");
+	if (addFlight(pointerD, pFlight5) == FAILURE) printf("FAIL4\n");
+	if (addFlight(pointerD, pFlight6) == FAILURE) printf("FAIL5\n");
+	if (addFlight(pointerD, pFlight7) == FAILURE) printf("FAIL6\n");
+	if (addFlight(pointerI, pFlight8) == FAILURE) printf("FAIL7\n");
+	if (addFlight(pointerI, pFlight9) == FAILURE) printf("FAIL8\n");
 
-	printf("Number of flights in List: %d\n\n", getFlightNum(pointer));
-	if (isFlightExists(pointer,3)==TRUE) printf("the flight exists!\n");
-	if (isFlightExists(pointer, 10) == FALSE) printf("the flight doesn't exists!\n");
+	printf("Number of flights in List: %d\n\n", getFlightNum(pointerD));
+	if (isFlightExists(pointerI,3)==TRUE) printf("the flight exists!\n");
+	if (isFlightExists(pointerD, 1) == FALSE) printf("the flight doesn't exists!\n");
 
-	printRunway(pointer);
+	printRunway(pointerD);
+	printRunway(pointerI);
+
 
 	printf("\n");
-	if (depart(pointer) == FAILURE) printf("FAIL!!");
-	printf("Number of flights in List: %d\n\n", getFlightNum(pointer));
-	printRunway(pointer);
-	destroyRunway(pointer);
+	if (depart(pointerI) == FAILURE) printf("FAIL!!");
+	printf("Number of flights in List I: %d\n\n", getFlightNum(pointerD));
+	printf("Number of flights in List D: %d\n\n", getFlightNum(pointerI));
+	printRunway(pointerI);
+	destroyRunway(pointerI);
+	destroyRunway(pointerD);
+
 	
 	return 0;
 

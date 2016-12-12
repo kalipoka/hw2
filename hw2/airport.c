@@ -4,12 +4,13 @@
 static PAIRPORT PAirport;
 
 ///helper functions
-PFLIGHT findFlightNum(int flightNum)
+PFLIGHT findFlightNum(int flightNum) //Check this out
 {
 	PRUNWAY_ELEM iRunways = PAirport->head->pNext;
 	PFLIGHT_ELEM iFlights = iRunways->data->Lflight->head->pNext;
 
 	while (iRunways) {
+		iFlights = iRunways->data->Lflight->head->pNext;
 		while (iFlights)
 		{
 			if (isFlightExists(iRunways->data, flightNum) == TRUE)
@@ -175,6 +176,7 @@ void printAirport()
 		printRunway(iRunways->data);
 		iRunways = iRunways->pNext;
 	}
+	printf("\n");
 	return;
 }
 
