@@ -9,6 +9,7 @@ typedef struct _FLIGHT
 	FlightType flight_type;            /*FlightType from from ex2.h*/
 	char destination[DEST_SIZE];              /*is it the correct way to define string?*/
 	BOOL emergency;                  /*is it emergency*/
+	BOOL Flag;						/*Flag for the user usage*/
 } FLIGHT, *PFLIGHT;
 
 

@@ -28,7 +28,7 @@ typedef struct _RUNWAY
 } RUNWAY, *PRUNWAY;
 
 
-PRUNWAY create_runway(int, FlightType); /*return an id to the created runway*/
+PRUNWAY createRunway(int, FlightType); /*return an id to the created runway*/
 void destroyRunway(PRUNWAY);  /* destroy the runway and waiting list in the runway*/
 BOOL isFlightExists(PRUNWAY, int); /*Return True if flight exists else return False - using flight pointer and runway*/
 int getFlightNum(PRUNWAY); /*number of flights waiting - using runway pointer*/

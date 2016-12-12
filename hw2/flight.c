@@ -40,6 +40,7 @@ PFLIGHT createFlight(int flight_num, FlightType flight_type, char destination[DE
 	pFlight->flight_type = flight_type;
 	strcpy(pFlight->destination, destination);
 	pFlight->emergency = emergency;
+	pFlight->Flag = FALSE;
 	return pFlight;
 
 }

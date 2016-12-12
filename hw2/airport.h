@@ -10,8 +10,16 @@
 #include "runway.h"
 
 
+typedef struct _LIST_ELEM {
+	void* data;
+	struct _LIST_ELEM* pNext;
+} LIST_ELEM, *PLIST_ELEM;
+
+
+
 typedef struct _RUNWAY_LIST_ELEM {
 	PRUNWAY data;
+
 	struct _RUNWAY_LIST_ELEM* pNext;
 } RUNWAY_ELEM, *PRUNWAY_ELEM;
 

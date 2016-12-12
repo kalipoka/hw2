@@ -82,7 +82,7 @@ BOOL addToSet_Emergency(PFLIGHT_SET s, PFLIGHT PFlight) {
 
 //////////////////
 
-PRUNWAY create_runway(int RunwayNum, FlightType type) // return a pointer to the created runway
+PRUNWAY createRunway(int RunwayNum, FlightType type) // return a pointer to the created runway
 {
 	if ((type != DOMESTIC) && (type != INTERNATIONAL) || ((RunwayNum < 0) && RunwayNum > MAX_ID))
 		return NULL;
@@ -123,7 +123,7 @@ void destroyRunway(PRUNWAY PRunway)  /* destroy the runway and waiting list in t
 }
 
 BOOL isFlightExists(PRUNWAY PRunway, int flight_num)
-/*Return True if flight exists else return False - using flight pointer*/
+/*Return True if flight exists in runway else return False - using flight pointer*/
 {
 	if (!PRunway)
 		return FALSE;
@@ -161,6 +161,9 @@ Result addFlight(PRUNWAY PRunway, PFLIGHT Pflight) /*Inserts a flight to the run
 	/*create a copy of the flight*/
 	PFLIGHT new_Pflight  = createFlight(Pflight->flight_num, Pflight->flight_type, Pflight->destination, Pflight->emergency);
 
+	/*remove last flight before copy*/
+	destroyFlight(Pflight);
+
 	if (new_Pflight->emergency == TRUE) //
 		if (addToSet_Emergency(PRunway->Lflight, new_Pflight) == TRUE)
 			return SUCCESS;
@@ -187,6 +190,7 @@ Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a ru
 		if (tmp->data->flight_num == flight_num)
 		{
 			pPrev->pNext= tmp->pNext;
+			PRunway;
 			destroyFlight(tmp->data);
 			PRunway->Lflight->size--;
 			return SUCCESS;
@@ -229,8 +233,8 @@ int main()
 
 	PRUNWAY pointerI, pointerD;
 
-	pointerI = create_runway(1, INTERNATIONAL);
-	pointerD = create_runway(2, DOMESTIC);
+	pointerI = createRunway(1, INTERNATIONAL);
+	pointerD = createRunway(2, DOMESTIC);
 
 	PFLIGHT pFlight3 = createFlight(3, DOMESTIC, "HFA", FALSE);
 	PFLIGHT pFlight4 = createFlight(4, DOMESTIC, "JRS", FALSE);
