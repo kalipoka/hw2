@@ -153,10 +153,11 @@ Result stormAlert(char destination[DEST_SIZE])
 	if (isDst(destination) != 0) return FAILURE;
 	PRUNWAY_ELEM iRunways = PAirport->head->pNext;
 	PLIST_ELEM pointer_list; 
+	PFLIGHT_ELEM iFlights = NULL;
 
 	while (iRunways) {
 		/* adding all flights with same dst to a list*/
-		PFLIGHT_ELEM iFlights = iRunways->data->Lflight->head->pNext;
+		iFlights = iRunways->data->Lflight->head->pNext;
 		while (iFlights) {
 			if (!strcmp(iFlights->data->destination, destination))
 				if (iFlights->data->Flag == FALSE) {
@@ -164,6 +165,7 @@ Result stormAlert(char destination[DEST_SIZE])
 					FlightType flight_type = iFlights->data->flight_type;
 					BOOL emergency = iFlights->data->emergency;
 					if (removeFlight(iRunways->data, n) == FAILURE) return FAILURE;
+					iFlights = iRunways->data->Lflight->head;
 					PFLIGHT Pflight_tmp = createFlight(n, flight_type, destination, emergency);
 					if (addFlight(iRunways->data, Pflight_tmp) == FAILURE) return FAILURE;
 					/* The flight already been re-added*/

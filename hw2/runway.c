@@ -53,7 +53,6 @@ BOOL addToSet(PFLIGHT_SET s, PFLIGHT PFlight) {
 	return TRUE;
 }
 
-
 BOOL addToSet_Emergency(PFLIGHT_SET s, PFLIGHT PFlight) {
 	PFLIGHT_ELEM tmp;
 	if (!s) return FALSE;
@@ -195,6 +194,7 @@ Result removeFlight(PRUNWAY PRunway, int flight_num) /*remove a flight from a ru
 		{
 			pPrev->pNext= tmp->pNext;
 			destroyFlight(tmp->data);
+			free(tmp);
 			PRunway->Lflight->size--;
 			return SUCCESS;
 		}
